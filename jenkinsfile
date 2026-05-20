@@ -39,5 +39,21 @@ pipeline {
                 '''
             }
         }
+        stage('Login to dockerhub'){
+            withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+            sh 'echo $PASS | docker login -u $USER --password-stdin'
+        }
+    }
+    stage('push the frontend to dockerhub'){
+        steps{
+            sh 'docker tag frontend-app $USER/frontend-app:$BUILD_NUMBER'
+            sh 'docker push $USER/frontend-app:$BUILD_NUMBER'
+        }
+    }
+    stage('push the backend to dokcerhub'){
+        steps{
+            sh 'docker tag backend-app $USER/backend-app:$BUILD_NUMBER'
+            sh 'docker push $USER/backend-app:$BUILD_NUMBER'
+        }
     }
 }
