@@ -4,6 +4,7 @@ pipeline {
     environment {
         FRONTEND_IMAGE = "frontend-app"
         BACKEND_IMAGE  = "backend-app"
+        DOCKER_HUB_USER = "syedumer98488"
     }
 
     stages {
