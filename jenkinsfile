@@ -56,4 +56,5 @@ pipeline {
             sh 'docker push $USER/backend-app:$BUILD_NUMBER'
         }
     }
+    }
 }
