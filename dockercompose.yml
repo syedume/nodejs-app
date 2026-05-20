@@ -1,18 +1,10 @@
-version: '3'
 services:
   frontend:
-    build: syedumer98488/frontend1.0
-    container_name: frontend-container
+    image: syedumer98488/frontend-app:1.0
     ports:
-      - 6400:6400
-    restart: always
-  
-  backend:
-    build: syedumer98488/backend1.0
-    container_name: backend-container 
-    ports:
-     - 7400:7400
-    restart: always 
+      - "6400:6400"
 
-    depends_on:
-      - backend
+  backend:
+    image: syedumer98488/backend-app:1.0
+    ports:
+      - "7400:7400"
