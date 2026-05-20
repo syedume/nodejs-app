@@ -38,6 +38,6 @@ app.get("/cart", (req, res) => {
   res.json(cart);
 });
 
-app.listen(5000, () => {
-  console.log("Backend running on port 5000");
+app.listen(7400, () => {
+  console.log("Backend running on port 7400");
 });

@@ -1,4 +1,4 @@
-const API = "http://backend:5000";
+const API = "http://backend:7400";
 
 async function loadProducts() {
   const res = await fetch(`${API}/products`);
