@@ -1,0 +1,30 @@
+pipeline{
+    agent any
+    stages{
+        stage ('git clone'){
+            steps{
+                sh ""
+            }
+        }
+        stage ('Install dependencies'){
+            steps{
+                sh 
+            }
+        }
+        stage ('Build application'){
+            steps{
+
+            }
+        }
+        stage('Build docker image'){
+            steps{
+
+            }
+        }
+        stage ('push the docker image'){
+            steps{
+
+            }
+        }
+    }
+}

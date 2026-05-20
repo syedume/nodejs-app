@@ -1,27 +1,19 @@
-import React, { useEffect, useState } from "react";
+const http = require('http');
 
-function App() {
-  const [users, setUsers] = useState([]);
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
 
-  useEffect(() => {
-    fetch("http://localhost:5000/users")
-      .then((res) => res.json())
-      .then((data) => setUsers(data));
-  }, []);
+    res.write(`
+        <html>
+            <body>
+                <h1>Frontend Application Running</h1>
+            </body>
+        </html>
+    `);
 
-  return (
-    <div style={{ padding: "20px" }}>
-      <h1>DevOps Project</h1>
+    res.end();
+});
 
-      <h2>Users List</h2>
-
-      {users.map((user) => (
-        <div key={user.id}>
-          {user.name}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-export default App;
+server.listen(3000, () => {
+    console.log("Server running on port 3000");
+});
