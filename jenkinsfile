@@ -4,7 +4,7 @@ pipeline {
     environment {
         FRONTEND_IMAGE = "frontend-app"
         BACKEND_IMAGE  = "backend-app"
-        USER = "syedumer98488"
+        DOCKER_USER    = "syedumer98488"
     }
 
     stages {
@@ -19,13 +19,13 @@ pipeline {
 
         stage('Build Frontend Image') {
             steps {
-                sh 'docker build -t frontend-app ./frontend'
+                sh "docker build -t $FRONTEND_IMAGE ./frontend"
             }
         }
 
         stage('Build Backend Image') {
             steps {
-                sh 'docker build -t backend-app ./backend'
+                sh "docker build -t $BACKEND_IMAGE ./backend"
             }
         }
 
@@ -35,28 +35,39 @@ pipeline {
                 docker rm -f frontend || true
                 docker rm -f backend || true
 
-                docker run -d -p 6400:6400 --name frontend frontend-app
-                docker run -d -p 7400:7400 --name backend backend-app
+                docker run -d -p 3000:80 --name frontend frontend-app
+                docker run -d -p 5000:5000 --name backend backend-app
                 '''
             }
         }
-        stage('Login to dockerhub'){
-            steps{
-               withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                sh 'echo $PASS | docker login -u $USER --password-stdin' 
+
+        stage('Login to Docker Hub') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub',
+                    usernameVariable: 'DH_USER',
+                    passwordVariable: 'DH_PASS'
+                )]) {
+                    sh 'echo $DH_PASS | docker login -u $DH_USER --password-stdin'
+                }
             }
         }
-    }
-        stage('push the frontend to dockerhub'){
-            steps{
-                sh 'docker tag frontend-app $USER/frontend-app:$BUILD_NUMBER'
-                sh 'docker push $USER/frontend-app:$BUILD_NUMBER'
+
+        stage('Push Frontend Image') {
+            steps {
+                sh '''
+                docker tag frontend-app $DOCKER_USER/frontend-app:$BUILD_NUMBER
+                docker push $DOCKER_USER/frontend-app:$BUILD_NUMBER
+                '''
             }
         }
-        stage('push the backend to dokcerhub'){
-            steps{
-                sh 'docker tag backend-app $USER/backend-app:$BUILD_NUMBER'
-                sh 'docker push $USER/backend-app:$BUILD_NUMBER'
+
+        stage('Push Backend Image') {
+            steps {
+                sh '''
+                docker tag backend-app $DOCKER_USER/backend-app:$BUILD_NUMBER
+                docker push $DOCKER_USER/backend-app:$BUILD_NUMBER
+                '''
             }
         }
     }
