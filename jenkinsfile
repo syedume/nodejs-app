@@ -34,8 +34,8 @@ pipeline {
                 docker rm -f frontend || true
                 docker rm -f backend || true
 
-                docker run -d -p 3000:3000 --name frontend frontend-app
-                docker run -d -p 5000:5000 --name backend backend-app
+                docker run -d -p 6400:6400 --name frontend frontend-app
+                docker run -d -p 7400:7400 --name backend backend-app
                 '''
             }
         }
