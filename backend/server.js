@@ -34,3 +34,6 @@ app.post("/products", (req, res) => {
 });
 
 app.listen(5000, "0.0.0.0", () => {})
+app.get("/", (req, res) => {
+  res.send("🚀 Backend is running successfully");
+});
