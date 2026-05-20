@@ -22,6 +22,10 @@ db.connect((err) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("Backend Application Running");
+});
+
 app.get("/health", (req, res) => {
   res.json({
     status: "Backend Running"
