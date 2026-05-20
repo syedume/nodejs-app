@@ -10,7 +10,7 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git branch: 'main',
+                git branch: 'master',
                     credentialsId: 'github',
                     url: 'https://github.com/syedume/nodejs-app.git'
             }
